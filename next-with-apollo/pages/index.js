@@ -58,18 +58,46 @@ export default function Home({ countries,languages}) {
 }
 
 
-export async function getStaticProps() {
+
+// Using Apollo Client for statically rendered page data
+// export async function getStaticProps() {
+//   const { data } = await client.query({
+//     query: gql`
+//       query Countries {
+//         countries {
+//           code
+//           currency
+//           name
+//           emoji
+//           languages{
+//             name
+//           }
+//         }
+//       }
+//     `,
+//   });
+
+//   return {
+//     props: {
+//       countries: data.countries.slice(0, 4),
+//       // languages: data.countries.languages.slice(0, 4),
+
+//     },
+//  };
+// }
+
+
+
+// pages/server-side.js
+
+export async function getServerSideProps() {
   const { data } = await client.query({
     query: gql`
       query Countries {
         countries {
           code
-          currency
           name
           emoji
-          languages{
-            name
-          }
         }
       }
     `,
@@ -78,9 +106,6 @@ export async function getStaticProps() {
   return {
     props: {
       countries: data.countries.slice(0, 4),
-      // languages: data.countries.languages.slice(0, 4),
-
     },
- };
+  };
 }
-
